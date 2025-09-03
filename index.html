@@ -43,28 +43,7 @@
 </head>
 <body>
 
-  <select id="modelSelect">
-    <option value="models/32-3-1.glb">32-3-1</option>
-    <option value="models/32-3-2.glb">32-3-2</option>
-    <option value="models/32-3-3.glb">32-3-3</option>
-    <option value="models/32-3-4.glb">32-3-4</option>
-    <option value="models/33-3-1.glb">33-3-1</option>
-    <option value="models/33-3-2.glb">33-3-2</option>
-    <option value="models/33-3-3.glb">33-3-3</option>
-    <option value="models/33-3-4.glb">33-3-4</option>
-    <option value="models/34-3-1.glb">34-3-1</option>
-    <option value="models/34-3-2.glb">34-3-2</option>
-    <option value="models/34-3-3.glb">34-3-3</option>
-    <option value="models/34-3-4.glb">34-3-4</option>
-    <option value="models/35-3-1.glb">35-3-1</option>
-    <option value="models/35-3-2.glb">35-3-2</option>
-    <option value="models/35-3-3.glb">35-3-3</option>
-    <option value="models/35-3-4.glb">35-3-4</option>
-    <option value="models/36-3-1.glb">36-3-1</option>
-    <option value="models/36-3-2.glb">36-3-2</option>
-    <option value="models/36-3-3.glb">36-3-3</option>
-    <option value="models/36-3-4.glb">36-3-4</option>
-  </select>
+  <select id="modelSelect"></select>
 
   <model-viewer 
     id="arModelViewer"
@@ -79,25 +58,41 @@
   </model-viewer>
 
   <script>
+    // 全GLBモデルURLを定義
+    const modelFiles = [
+      "models/32-3-1.glb","models/32-3-2.glb","models/32-3-3.glb","models/32-3-4.glb",
+      "models/33-3-1.glb","models/33-3-2.glb","models/33-3-3.glb","models/33-3-4.glb",
+      "models/34-3-1.glb","models/34-3-2.glb","models/34-3-3.glb","models/34-3-4.glb",
+      "models/35-3-1.glb","models/35-3-2.glb","models/35-3-3.glb","models/35-3-4.glb",
+      "models/36-3-1.glb","models/36-3-2.glb","models/36-3-3.glb","models/36-3-4.glb"
+    ];
+
     const select = document.getElementById('modelSelect');
     const modelViewer = document.getElementById('arModelViewer');
 
-    const modelUrls = Array.from(select.options).map(option => option.value);
-
-    select.addEventListener('change', (event) => {
-      const newSrc = event.target.value;
-      modelViewer.src = newSrc;
+    // optionを自動生成（ファイル名をラベルにする）
+    modelFiles.forEach(file => {
+      const option = document.createElement('option');
+      option.value = file;
+      option.textContent = file.split('/').pop().replace('.glb',''); 
+      select.appendChild(option);
     });
 
+    // 選択変更時にモデル切替
+    select.addEventListener('change', (event) => {
+      modelViewer.src = event.target.value;
+    });
+
+    // URLパラメータで初期モデル指定（?model=番号）
     const params = new URLSearchParams(window.location.search);
     const modelIndex = parseInt(params.get("model"));
 
-    if (!isNaN(modelIndex) && modelIndex >= 1 && modelIndex <= modelUrls.length) {
+    if (!isNaN(modelIndex) && modelIndex >= 1 && modelIndex <= modelFiles.length) {
       select.selectedIndex = modelIndex - 1;
-      modelViewer.src = modelUrls[modelIndex - 1];
+      modelViewer.src = modelFiles[modelIndex - 1];
     } else {
       select.selectedIndex = 0;
-      modelViewer.src = modelUrls[0];
+      modelViewer.src = modelFiles[0];
     }
   </script>
 
