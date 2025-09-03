@@ -58,7 +58,7 @@
   </model-viewer>
 
   <script>
-    // 全GLBモデルURLを定義
+    // GLBファイル一覧
     const modelFiles = [
       "models/32-3-1.glb","models/32-3-2.glb","models/32-3-3.glb","models/32-3-4.glb",
       "models/33-3-1.glb","models/33-3-2.glb","models/33-3-3.glb","models/33-3-4.glb",
@@ -70,20 +70,20 @@
     const select = document.getElementById('modelSelect');
     const modelViewer = document.getElementById('arModelViewer');
 
-    // optionを自動生成（ファイル名をラベルにする）
+    // プルダウンをファイル名で生成
     modelFiles.forEach(file => {
       const option = document.createElement('option');
       option.value = file;
-      option.textContent = file.split('/').pop().replace('.glb',''); 
+      option.textContent = file.split('/').pop().replace('.glb',''); // ← ファイル名だけ
       select.appendChild(option);
     });
 
-    // 選択変更時にモデル切替
+    // 選択時にモデル切替
     select.addEventListener('change', (event) => {
       modelViewer.src = event.target.value;
     });
 
-    // URLパラメータで初期モデル指定（?model=番号）
+    // URLパラメータ ?model=番号 で初期値指定
     const params = new URLSearchParams(window.location.search);
     const modelIndex = parseInt(params.get("model"));
 
