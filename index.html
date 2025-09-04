@@ -41,26 +41,43 @@
   <select id="modelSelect"></select>
 
   <script>
-    // 読み込むモデル一覧
+    // 読み込むモデル一覧（20個）
     const modelFiles = [
       "models/32-3-1.glb",
       "models/32-3-2.glb",
       "models/32-3-3.glb",
+      "models/32-3-4.glb",
       "models/33-3-1.glb",
       "models/33-3-2.glb",
-      "models/33-3-3.glb"
+      "models/33-3-3.glb",
+      "models/33-3-4.glb",
+      "models/34-3-1.glb",
+      "models/34-3-2.glb",
+      "models/34-3-3.glb",
+      "models/34-3-4.glb",
+      "models/35-3-1.glb",
+      "models/35-3-2.glb",
+      "models/35-3-3.glb",
+      "models/35-3-4.glb",
+      "models/36-3-1.glb",
+      "models/36-3-2.glb",
+      "models/36-3-3.glb",
+      "models/36-3-4.glb"
     ];
 
     const select = document.getElementById("modelSelect");
     const viewer = document.getElementById("viewer");
 
-    // プルダウンを生成（表示名はファイル名だけにする）
+    // プルダウンを生成（ファイル名を表示）
     modelFiles.forEach(file => {
       const option = document.createElement("option");
       option.value = file;
       option.textContent = file.split("/").pop().replace(".glb", "");
       select.appendChild(option);
     });
+
+    // 初期値を設定
+    select.value = "models/32-3-1.glb";
 
     // 選択されたモデルを表示
     select.addEventListener("change", () => {
