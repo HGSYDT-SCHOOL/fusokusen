@@ -82,11 +82,12 @@
     const select = document.getElementById('modelSelect');
     const modelViewer = document.getElementById('arModelViewer');
 
-    // プルダウンにモデルを追加
-    modelFiles.forEach((file, index) => {
+    // プルダウンにモデルを追加（拡張子なし）
+    modelFiles.forEach((file) => {
       const option = document.createElement('option');
       option.value = file;
-      option.textContent = `モデル ${index + 1}`;
+      const fileName = file.split('/').pop().replace('.glb',''); // .glbを除去
+      option.textContent = fileName;
       select.appendChild(option);
     });
 
